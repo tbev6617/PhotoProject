@@ -229,5 +229,38 @@ public class Picture extends SimplePicture
     beach.zeroBlue();
     beach.explore();
   }
-  
-} // this } is the end of class Picture, put all new methods before this
+  public void duckFilter()
+  {
+	  Pixel fromPixel;
+	  Pixel toPixel;
+	  Picture ducky = new Picture(/*TODO ADD NAME of Picture*/);
+  }
+  public void glitch()
+  {
+	  Pixel[][] pixels = this.getPixels2D();
+	  Pixel[][] originPix = new Pixel[pixels.length][pixels[0].length];
+	  for(int row = 0; row < pixels.length; row++)
+	  {
+		  for(int col = 0; col < pixels[0].length; col++)
+		  {
+			  originPix[row][col] = pixels[row][col];
+		  }
+	  }
+	  
+	  int shiftAmount = (int)(.33 * pixels[0].length);
+	  Pixel leftPixel = null;
+	  Pixel rightPixel = null;
+	  int width = pixels[0].length;
+	  for(int row = 0; row < pixels.length; row++)
+	  {
+		  for(int col = 0; col < pixels[0].length; col++)
+		  {
+			  leftPixel = pixels[row][col];
+			  rightPixel = originPix[row][(col + shiftAmount) % width];
+			  Color rightColor = rightPixel.getColor();
+			  leftPixel.setColor(rightColor);
+			  
+		  }
+	  }
+  }
+} 
