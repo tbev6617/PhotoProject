@@ -1,4 +1,7 @@
 package pixLab.classes;
+
+import java.awt.Color;
+
 /**
  * This class contains class (static) methods
  * that will help you test the Picture class 
@@ -54,12 +57,22 @@ public class PictureTester
   public static void testGlitch()
   {
 	  Picture beach = new Picture("beach.jpg");
-	  //beach.explore();
-	  //beach.glitch();
+	  beach.glitch();
+	  beach.explore();
+  }
+  public static void testClassFilter() 
+  {
+	  Picture beach = new Picture("beach.jpg");
 	  beach.classFilter();
 	  beach.explore();
   }
-  
+  public static void testGlitchTwo()
+  {
+	  Picture beach = new Picture("beach.jpg");
+	  beach.explore();
+	  beach.shiftGlitch();
+	  beach.explore();
+  }
   /** Main method for testing.  Every class can have a main
     * method in Java */
   public static void main(String[] args)
@@ -68,7 +81,8 @@ public class PictureTester
     // and comment out the ones you don't want
     // to run
     //testZeroBlue();
-    testGlitch();
+    //testGlitch();
+    testGlitchTwo();
     //testKeepOnlyBlue();
     //testKeepOnlyRed();
     //testKeepOnlyGreen();

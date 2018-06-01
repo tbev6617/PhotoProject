@@ -262,13 +262,88 @@ public class Picture extends SimplePicture
 	  Pixel[][] pixels = this.getPixels2D();
 	  int width = pixels[0].length;
 	  int height = pixels.length;
-	  int border = (int)(0.05 * height);
-	  for (int row = border; row < (height - border); row++)
+	  int border = (int) (width * .05);
+	  for (int row = border; row < height - border; row++)
 	  {
-		  for(int col = border; col < (border + 20); col++)
+		  for(int col = border; col < (border + 25); col++)
 		  {
-			  pixels[row][col] = pixels[row][col + 20];
+			  
+			  pixels[row][col].setColor(pixels[row][border + 25 - col].getColor());
 		  }
 	  }
   }
+  public void shiftGlitch()
+  {
+	  Pixel[][] pixels = this.getPixels2D();
+	  int width = pixels[0].length;
+	  int height = pixels.length;
+	  int border = (int)((Math.random() * .2 + .2) * width);
+	  for(int i = 0; i < border; i++)
+	  {
+		  pixels = shiftByOne(pixels, height, width);
+	  } //Rectangles
+	  for(int i = 0; i < 100; i++)
+	  {
+		  for(int k = 0; k < 100; k++)
+		  {
+			  pixels[i + 10][k + 10].setColor(randColor());
+			  pixels[i + 100][k + 100].setColor(randColor());
+		  }
+	  } //RED and BLUE copy
+	  for(int h = 0; h < 100; h++)
+	  {
+		  for(int k = 0; k < 100; k++)
+		  {
+			  int red = pixels[h + 200][k + 300].getRed();
+			  int blue = pixels[h + 200][k + 300].getBlue();
+			  int green = pixels[h + 100][k + 500].getGreen();
+			  pixels[h + 100][k + 500].setColor(new Color(red, green, blue));
+		  }
+	  }
+  }
+  public Pixel[][] shiftByOne(Pixel[][] pixels, int height, int width)
+  {
+	  Pixel[] lastCol = new Pixel[height];
+	  for(int row = 0; row < height; row++)
+	  {
+		  lastCol[row] = pixels[row][width - 1];
+	  }
+	  
+	  for(int row = 0; row < height; row++)
+	  {
+		  for(int col = width - 1; col > 0; col--)
+		  {
+			  pixels[row][col].setColor(pixels[row][col - 1].getColor());
+		  }
+	  }
+	  for(int row = 0; row < height; row++)
+	  {
+		  pixels[row][1].setColor(lastCol[row].getColor());
+	  }
+	  return pixels;
+  }
+  public void addMessage(Color color, String message, int xPos, int yPos)
+  {
+	// get a graphics context to use to draw on the buffered image
+	   Graphics2D graphics2d = this.createGraphics();
+	   
+	   // set the color to what is supplied
+	   graphics2d.setPaint(color);
+	   
+	   // set the font to Helvetica bold style and size 16
+	   graphics2d.setFont(new Font("Helvetica",Font.BOLD,16));
+	   
+	   // draw the message
+	   graphics2d.drawString(message,xPos,yPos);
+  }
+  public Color randColor()
+  {
+	  int red = (int)(Math.random() * 255);
+	  int green = (int)(Math.random() * 255);
+	  int blue = (int)(Math.random() * 255);
+	  return new Color(red, green, blue);
+  }
+  
+  
+  
 } 
